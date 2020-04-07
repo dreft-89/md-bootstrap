@@ -12,6 +12,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // extracts CSS into separate files
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
 const StylelintPlugin = require('stylelint-webpack-plugin');
 
 
@@ -20,11 +21,11 @@ module.exports = (env, argv) => {
     entry: [
       path.resolve(__dirname, "src/js/index.js"),
       path.resolve(__dirname, "src/scss/main.scss"),
-      path.resolve(__dirname, "node_modules/mdbootstrap/scss/mdb-free.scss")
+      path.resolve(__dirname, "node_modules/mdbootstrap/scss/mdb-free.scss"),
     ],
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "bundle.js"
+      filename: "bundle.js",
     },
     mode: argv.mode,
     module: {
@@ -36,8 +37,8 @@ module.exports = (env, argv) => {
           loader: "eslint-loader",
           options: {
             // @TODO - make it false to prevent auto-fixing
-            fix: true
-          }
+            fix: true,
+          },
         },
         {
           test: /\.js$/,
@@ -45,8 +46,8 @@ module.exports = (env, argv) => {
           loader: "babel-loader",
           options: {
             cacheDirectory: true,
-            sourceType: "unambiguous"
-          }
+            sourceType: "unambiguous",
+          },
         },
         {
           test: /\.html$/,
@@ -55,8 +56,8 @@ module.exports = (env, argv) => {
             minimize: true,
             removeComments: true,
             collapseWhitespace: true,
-            attrs: ["img:src", "source:srcset"]
-          }
+            attrs: ["img:src", "source:srcset"],
+          },
         },
         {
           test: /\.(sa|sc|c)ss$/,
@@ -64,60 +65,59 @@ module.exports = (env, argv) => {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                hmr: process.env.NODE_ENV === "development"
-              }
+                hmr: process.env.NODE_ENV === "development",
+              },
             },
             "css-loader",
             // 'postcss-loader',
-            "sass-loader"
-          ]
+            "sass-loader",
+          ],
         },
 
         {
           test: /\.(jpe?g|png|gif)$/,
           loader: "file-loader",
           options: {
-            outputPath: "assets/"
-          }
+            outputPath: "assets/",
+          },
         },
         {
           test: /\.(eot|svg|ttf|woff2?|otf)$/,
           loader: "file-loader",
           options: {
-            outputPath: "assets/"
-          }
+            outputPath: "assets/",
+          },
         },
         {
           test: /\.hbs$/,
           loader: "handlebars-loader",
           options: {
             name: "[name].[ext]",
-            useRelativePath: true
-          }
-        }
-      ]
+            useRelativePath: true,
+          },
+        },
+      ],
     },
     plugins: [
       new HtmlWebPackPlugin({
         template: "src/pages/index.html",
         inject: "body",
-        filename: "index.html"
+        filename: "index.html",
       }),
-      new StylelintPlugin(options);
       new HtmlWebPackPlugin({
         template: "src/pages/products.html",
         inject: "body",
-        filename: "products"
+        filename: "products",
       }),
       new HtmlWebPackPlugin({
         template: "src/pages/about-us.html",
         inject: "body",
-        filename: "about"
+        filename: "about",
       }),
       new HtmlWebPackPlugin({
         template: "src/pages/contact-us.html",
         inject: "body",
-        filename: "contact"
+        filename: "contact",
       }),
       new webpack.ProvidePlugin({
         $: "jquery",
@@ -126,7 +126,7 @@ module.exports = (env, argv) => {
         "window.jQuery": "jquery",
         Waves: "node-waves",
         _: "underscore",
-        Promise: "es6-promise"
+        Promise: "es6-promise",
       }),
       new MiniCssExtractPlugin({
         filename:
@@ -136,9 +136,9 @@ module.exports = (env, argv) => {
         cssProcessorOptions: {
           safe: true,
           discardComments: {
-            removeAll: true
-          }
-        }
+            removeAll: true,
+          },
+        },
       }),
       new CopyWebpackPlugin([
         {
@@ -150,14 +150,17 @@ module.exports = (env, argv) => {
             "vendors",
             "mdb",
             "mdb-addons"
-          )
-        }
+          ),
+        },
       ]),
-      new CleanWebpackPlugin()
+      new CleanWebpackPlugin(),
+      new StylelintPlugin({
+        configFile: path.resolve(__dirname, '.stylelintrc.json'),
+      }),
     ],
     optimization: {
       splitChunks: {
-        chunks: "all"
+        chunks: "all",
       },
       minimizer: [
         new TerserPlugin({
@@ -165,15 +168,15 @@ module.exports = (env, argv) => {
           sourceMap: true,
           terserOptions: {
             output: {
-              comments: false
-            }
-          }
+              comments: false,
+            },
+          },
         }),
-        new OptimizeCSSAssetsPlugin({})
-      ]
+        new OptimizeCSSAssetsPlugin({}),
+      ],
     },
     performance: {
-      hints: false
-    }
+      hints: false,
+    },
   };
 };

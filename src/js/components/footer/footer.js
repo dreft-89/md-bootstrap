@@ -3,7 +3,7 @@ import footerTemplate from '../../templates/footer.hbs';
 var footerContainer = document.getElementById('footer-hbs');
 
 /* logic with nav links */
-const navigationLinksFooterPartners = [
+const navLinkPartners = [
   {
     url: 'https://itaxi.md/ru/',
     label: 'iTaxi',
@@ -22,7 +22,7 @@ const navigationLinksFooterPartners = [
   },
 ];
 
-const navigationLinksFooterKitchen = [
+const navLinkKitchen = [
   {
     url: 'https://foodhouse.md/ru/osho',
     label: 'Osho',
@@ -41,7 +41,7 @@ const navigationLinksFooterKitchen = [
   },
 ];
 
-const navigationLinksFooterLocation = [
+const navLinkLocation = [
   {
     url: 'https://www.google.com/search?sxsrf=ALeKk024cq9TBfVUf73JzkWIlcw37xyYfg:1585662215994&q=osho&npsic=0&rflfq=1&rlha=0&rllag=47002985,28859168,354&tbm=lcl&ved=2ahUKEwi8v_iI7MToAhUdwsQBHe2uDREQtgN6BAgKEAQ&tbs=lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!2m1!1e2!2m1!1e3!3sIAE,lf:1,lf_ui:9&rldoc=1#rlfi=hd:;si:;mv:[[47.0061024,28.860159699999997],[46.999869,28.8581766]];tbs:lrf:!1m4!1u3!2m2!3m1!1e1!1m4!1u2!2m2!2m1!1e1!2m1!1e2!2m1!1e3!3sIAE,lf:1,lf_ui:9',
     label: 'Osho',
@@ -69,5 +69,5 @@ const navigationLinksFooterLocation = [
 // });
 
 if (footerContainer) {
-  footerContainer.innerHTML = footerTemplate({ navigationLinksFooterPartners, navigationLinksFooterKitchen, navigationLinksFooterLocation });
+  footerContainer.innerHTML = footerTemplate({ navLinkPartners, navLinkKitchen, navLinkLocation });
 }
