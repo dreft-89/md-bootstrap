@@ -12,6 +12,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // extracts CSS into separate files
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const StylelintPlugin = require('stylelint-webpack-plugin');
+
 
 module.exports = (env, argv) => {
   return {
@@ -101,6 +103,7 @@ module.exports = (env, argv) => {
         inject: "body",
         filename: "index.html"
       }),
+      new StylelintPlugin(options);
       new HtmlWebPackPlugin({
         template: "src/pages/products.html",
         inject: "body",
